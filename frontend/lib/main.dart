@@ -1,121 +1,158 @@
 import 'package:flutter/material.dart';
+import 'screens/role_selection_screen.dart';
+import 'screens/farmer_screen.dart';
+import 'screens/driver_screen.dart';
+import 'screens/supplier_screen.dart';
+import 'screens/retailer_screen.dart';
+import 'screens/inspector_screen.dart';
+import 'screens/consumer_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AgriChainApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class AgriChainApp extends StatelessWidget {
+  const AgriChainApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'AgriChain SIH 2026',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: .fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: const Color(0xFF2E7D32),
+          primary: const Color(0xFF2E7D32),
+          secondary: const Color(0xFF1565C0),
+        ),
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MainDashboardShell(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class MainDashboardShell extends StatefulWidget {
+  const MainDashboardShell({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<MainDashboardShell> createState() => _MainDashboardShellState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _MainDashboardShellState extends State<MainDashboardShell> {
+  int _selectedRoleIndex = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final List<String> _roles = [
+    'Farmer / Producer',
+    'Transporter / Driver',
+    'Supplier / Wholesaler',
+    'Retailer / Store',
+    'Government FDA Inspector',
+    'Public Consumer'
+  ];
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+    final bool isWebDesktop = MediaQuery.of(context).size.width > 800;
+
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+        title: const Text(
+          'AgriChain | Enterprise v2.0',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person_add),
+            tooltip: "Role Onboarding",
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const RoleSelectionScreen()),
+              );
+            },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: DropdownButton<int>(
+              value: _selectedRoleIndex,
+              dropdownColor: Theme.of(context).colorScheme.primary,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13),
+              underline: const SizedBox(),
+              icon: const Icon(Icons.swap_horiz, color: Colors.white),
+              items: List.generate(_roles.length, (index) {
+                return DropdownMenuItem(
+                  value: index,
+                  child: Text(_roles[index]),
+                );
+              }),
+              onChanged: (val) => setState(() => _selectedRoleIndex = val!),
+            ),
+          )
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      body: Row(
+        children: [
+          if (isWebDesktop)
+            NavigationRail(
+              selectedIndex: _selectedRoleIndex,
+              onDestinationSelected: (int index) {
+                setState(() => _selectedRoleIndex = index);
+              },
+              labelType: NavigationRailLabelType.all,
+              destinations: const [
+                NavigationRailDestination(
+                  icon: Icon(Icons.agriculture),
+                  selectedIcon: Icon(Icons.agriculture, color: Colors.green),
+                  label: Text('Farmer'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.local_shipping),
+                  selectedIcon: Icon(Icons.local_shipping, color: Colors.blue),
+                  label: Text('Driver'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.store),
+                  selectedIcon: Icon(Icons.store, color: Colors.amber),
+                  label: Text('Supplier'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.shopping_basket),
+                  selectedIcon: Icon(Icons.shopping_basket, color: Colors.purple),
+                  label: Text('Retailer'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.verified_user),
+                  selectedIcon: Icon(Icons.verified_user, color: Colors.red),
+                  label: Text('FDA Officer'),
+                ),
+                NavigationRailDestination(
+                  icon: Icon(Icons.qr_code_scanner),
+                  selectedIcon: Icon(Icons.qr_code_scanner, color: Colors.teal),
+                  label: Text('Consumer'),
+                ),
+              ],
+            ),
+          if (isWebDesktop) const VerticalDivider(thickness: 1, width: 1),
+          Expanded(
+            child: IndexedStack(
+              index: _selectedRoleIndex,
+              children: const [
+                FarmerBatchInitiationView(),
+                TransporterHandoffView(),
+                SupplierScreen(),
+                RetailerScreen(),
+                FDAInspectorWebView(),
+                ConsumerScreen(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
