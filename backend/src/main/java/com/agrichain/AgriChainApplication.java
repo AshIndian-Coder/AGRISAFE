@@ -19,6 +19,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class AgriChainApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(AgriChainApplication.class, args);
     }
 }

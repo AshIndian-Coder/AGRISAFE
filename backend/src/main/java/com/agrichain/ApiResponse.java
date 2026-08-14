@@ -16,7 +16,7 @@ public class ApiResponse<T> {
 
     private boolean success;
     private T data;
-    private ErrorResponse error;
+    private com.agrichain.common.dto.ErrorResponse error;
     private ResponseMeta meta;
 
     public static <T> ApiResponse<T> success(T data) {
@@ -42,7 +42,7 @@ public class ApiResponse<T> {
                 .build();
     }
 
-    public static ApiResponse<Void> error(ErrorResponse error) {
+    public static ApiResponse<Void> error(com.agrichain.common.dto.ErrorResponse error) {
         return ApiResponse.<Void>builder()
                 .success(false)
                 .error(error)
@@ -52,7 +52,7 @@ public class ApiResponse<T> {
                 .build();
     }
 
-    public static ApiResponse<Void> error(ErrorResponse error, String traceId) {
+    public static ApiResponse<Void> error(com.agrichain.common.dto.ErrorResponse error, String traceId) {
         return ApiResponse.<Void>builder()
                 .success(false)
                 .error(error)
