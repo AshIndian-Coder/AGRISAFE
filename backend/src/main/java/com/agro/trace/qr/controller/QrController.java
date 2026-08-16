@@ -1,5 +1,7 @@
 package com.agro.trace.qr.controller;
 
+import com.agro.trace.qr.dto.QrScanRequest;
+import jakarta.validation.Valid;
 import com.agro.trace.common.dto.ApiResponse;
 import com.agro.trace.qr.domain.QrCredential;
 import com.agro.trace.qr.service.QrCodeGenerator;
@@ -46,7 +48,20 @@ public class QrController {
 
         return ResponseEntity.ok().headers(headers).body(image);
     }
+    /**
+     * Get the current 30-second rotating backend code.
+     * The physical QR image remains unchanged.
+     */
+    @GetMapping("/{qrId}/current-code")
+    public ResponseEntity<ApiResponse<String>> getCurrentRotatingCode(
+            @PathVariable String qrId
+    ) {
+        String code = qrService.getCurrentRotatingCode(qrId);
 
+        return ResponseEntity.ok(
+                ApiResponse.success(code)
+        );
+    }
     /**
      * Validate the current state of a QR (without consuming it).
      */
@@ -54,5 +69,24 @@ public class QrController {
     public ResponseEntity<ApiResponse<QrCredential>> validateQr(@PathVariable String qrId) {
         var qr = qrService.validateQrStatus(qrId);
         return ResponseEntity.ok(ApiResponse.success(qr));
+    }
+    @PostMapping("/scan")
+    public ResponseEntity<ApiResponse<QrCredential>> scanRotatingQr(
+            @Valid @RequestBody QrScanRequest request
+    ) {
+
+        QrCredential qr =
+                qrService.verifyAndConsumeRotatingQr(
+                        request.qrId(),
+                        request.rotatingCode(),
+                        request.scannedByUuid(),
+                        request.scannedByRole(),
+                        request.latitude(),
+                        request.longitude()
+                );
+
+        return ResponseEntity.ok(
+                ApiResponse.success(qr)
+        );
     }
 }
