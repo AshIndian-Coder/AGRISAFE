@@ -8,10 +8,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import com.agro.trace.common.dto.ApiResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.time.Instant;
 
@@ -22,8 +22,8 @@ import java.time.Instant;
  */
 @Component
 @RequiredArgsConstructor
-@Slf4j
 public class IdempotencyFilter extends OncePerRequestFilter {
+    private static final Logger log = LoggerFactory.getLogger(IdempotencyFilter.class);
 
     private final IdempotencyKeyRepository repository;
     private final ObjectMapper objectMapper;
@@ -56,7 +56,6 @@ public class IdempotencyFilter extends OncePerRequestFilter {
         }
     }
 
-    @Transactional
     protected void saveKey(String key, String method, String path, int status) {
         IdempotencyRecord record = new IdempotencyRecord();
         record.setIdempotencyKey(key);

@@ -3,7 +3,7 @@ spring:
     name: agro-trace-backend
 
   datasource:
-    url: jdbc:mysql://localhost:3306/agro_trace_dev?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8&rewriteBatchedStatements=true
+    url: jdbc:mysql://localhost:3306/AGRISAFE
     username: ${DB_USERNAME:agro_trace_user}
     password: ${DB_PASSWORD:agro_trace_pass}
     driver-class-name: com.mysql.cj.jdbc.Driver
