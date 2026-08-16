@@ -1,0 +1,15 @@
+package com.agro.trace.users.domain;
+
+public enum UserType {
+    FARMER,
+    COLLECTING_AGENT,
+    TESTING_AGENT,
+    NODAL_CENTER_AGENT,
+    SUPPLIER,
+    MANUFACTURER_EMPLOYEE,
+    DISTRIBUTOR_EMPLOYEE,
+    RETAILER,
+    GOVERNMENT_EMPLOYEE,
+    GOVERNMENT_INVESTIGATOR,
+    SYSTEM_ADMIN
+}

@@ -1,0 +1,43 @@
+# Java
+*.class
+*.jar
+*.war
+*.log
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+.settings/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+application-prod.yml
+*.keystore
+
+# Logs
+logs/
+
+# Build
+build/
+dist/
+
+# Maven Wrapper
+mvnw
+mvnw.cmd
+
+# Docker
+docker/mysql/init/*.sql
+
+# Exclude secrets
+**/secrets/
