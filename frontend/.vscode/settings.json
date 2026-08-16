@@ -1,0 +1,8 @@
+{
+  // Keep the analyzer happy inside the repo
+  "dart.flutterGenerateDartMetadataOnPubGet": true,
+  "files.exclude": {
+    "**/.dart_tool": true,
+    "**/build": true
+  }
+}
