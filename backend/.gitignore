@@ -41,3 +41,5 @@ docker/mysql/init/*.sql
 
 # Exclude secrets
 **/secrets/
+
+.env.example
