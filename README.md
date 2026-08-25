@@ -195,4 +195,5 @@ src/main/java/com/agro/trace/
 ├── mockgovernment/ # Mock government registries
 └── common/         # Shared utilities & DTOs
 ```
-LICENSE
+## LICENSE
+https://github.com/AshIndian-Coder/AGRISAFE/blob/63f0832771fa1a0e916e8e59b180314bfa9c3b9f/LICENSE
