@@ -1,0 +1,185 @@
+spring:
+  application:
+    name: agro-trace-backend
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/AGRISAFE
+    username: ${DB_USERNAME:agro_trace_user}
+    password: ${DB_PASSWORD:agro_trace_pass}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 300000
+      connection-timeout: 20000
+      max-lifetime: 1200000
+      pool-name: AgroTraceHikariPool
+      leak-detection-threshold: 60000
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          batch_size: 50
+        order_inserts: true
+        order_updates: true
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: ENABLE_SELECTIVE
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    baseline-version: 0
+    out-of-order: false
+    validate-on-migrate: false
+
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      write-date-timestamps-as-nanoseconds: false
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non_null
+    date-format: yyyy-MM-dd'T'HH:mm:ss.SSS'Z'
+    time-zone: UTC
+
+server:
+  port: ${PORT:8080}
+  servlet:
+    context-path: /api/v1
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/plain,text/html
+  error:
+    include-stacktrace: never
+    include-message: always
+    include-binding-errors: always
+    whitelabel:
+      enabled: false
+
+# JWT Configuration
+app:
+  jwt:
+    access-token-expiration: 900000
+    refresh-token-expiration: 2592000000
+    issuer: agro-trace-backend
+    secret: ${JWT_SECRET:bXlTZWNyZXRLZXlTZWNyZXRLZXlTZWNyZXRLZXlTZWNyZXRLZXk=}
+
+  security:
+    pin-hash-type: ARGON2ID
+    pin-attempt-limit: 5
+    pin-lockout-duration-minutes: 30
+    otp-length: 6
+    otp-expiration-minutes: 10
+    otp-rate-limit-per-mobile: 3
+    otp-rate-limit-window-minutes: 60
+
+  qr:
+    credential-rotation-minutes: 1440
+    gps-required: true
+    gps-max-accuracy-meters: 50
+    geofence-enabled: false
+    default-geofence-radius-meters: 100
+
+  blockchain:
+    enabled: ${BLOCKCHAIN_ENABLED:false}
+    outbox-poll-interval-ms: 5000
+    max-retry-attempts: 5
+    target-network: POLYGON_AMOY_TESTNET
+    thirdweb:
+      secret-key: ${THIRDWEB_SECRET_KEY:}
+      wallet-address: ${THIRDWEB_WALLET_ADDRESS:}
+      contract-address: ${THIRDWEB_CONTRACT_ADDRESS:0x052dDa611de283Bcb37C3BCC1c7d1067cF5B38d4}
+      chain-id: ${THIRDWEB_CHAIN_ID:80002}
+      api-base-url: ${THIRDWEB_API_BASE_URL:https://api.thirdweb.com/v1}
+      poll-interval-ms: 1500
+      poll-timeout-ms: 30000
+
+  testing:
+    simulated-mode: true
+    anomaly-detection-enabled: true
+    max-similar-records-for-anomaly: 5
+    standards-cache-ttl-minutes: 60
+
+  notification:
+    enabled: false
+    default-provider: MOCK
+
+  payment:
+    enabled: false
+    default-provider: MOCK
+
+  pricing:
+    enabled: true
+    default-provider: MOCK
+    cache-ttl-minutes: 60
+
+  monitoring:
+    correlation-id-enabled: true
+    audit-log-enabled: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+  show-actuator: true
+  packages-to-scan: com.agro.trace
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env,prometheus
+  endpoint:
+    health:
+      show-details: when-authorized
+      probes:
+        enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    tags:
+      application: ${spring.application.name}
+
+logging:
+  level:
+    com.agro.trace: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: WARN
+    org.hibernate.type.descriptor.sql: WARN
+    com.zaxxer.hikari: INFO
+    org.flywaydb: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%X{correlationId}] - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} [%X{correlationId}] - %msg%n"
+  file:
+    name: logs/agro-trace.log
+    max-size: 100MB
+    max-history: 30

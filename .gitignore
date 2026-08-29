@@ -1,0 +1,81 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+replay_pid*
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.env
+*.log
+.pytest_cache/
+
+# --- Flutter / Dart ---
+.dart_tool/
+.packages
+build/
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+ios/Flutter/Flutter.podspec
+ios/Pods/
+macos/Pods/
+
+# --- Firebase ---
+.firebase/
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+*service-account*.json
+
+# --- React.js / Node ---
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+dist/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.example
+
+# --- Blockchain / Smart Contracts ---
+artifacts/
+cache/
+out/
+typechain/
+typechain-types/
+coverage/
+coverage.json
+crypto-config/
+*.tar.gz
+*.block
+secp256k1-key.pem
+*.key
+mnemonic.txt

@@ -1,0 +1,407 @@
+@import "tailwindcss";
+
+/* ─── AgriSafe Global Styles ─── */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Dark Mode CSS Variables ─── */
+:root,
+html.light {
+  --bg-primary: #F4F2EC;
+  --bg-secondary: #FAF9F5;
+  --bg-card: #FFFFFF;
+  --bg-sidebar: linear-gradient(180deg, #203A31 0%, #1a2f28 100%);
+  --bg-sidebar-solid: #203A31;
+  --text-primary: #202622;
+  --text-secondary: #68716B;
+  --text-muted: #9CA3AF;
+  --border-color: #D8D8D0;
+  --border-hover: #28483C;
+  --accent: #28483C;
+  --accent-hover: #1e3830;
+  --success: #397153;
+  --warning: #A56A2B;
+  --danger: #A7443F;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+html.dark {
+  --bg-primary: #0f1419;
+  --bg-secondary: #1a2332;
+  --bg-card: #1e2a3a;
+  --bg-sidebar: linear-gradient(180deg, #0d1117 0%, #0a0e14 100%);
+  --bg-sidebar-solid: #0d1117;
+  --text-primary: #e6edf3;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --border-color: #30363d;
+  --border-hover: #58a6ff;
+  --accent: #58a6ff;
+  --accent-hover: #79c0ff;
+  --success: #3fb950;
+  --warning: #d29922;
+  --danger: #f85149;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ─── Animations ─── */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slideInBottom {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* ─── Utility animation classes ─── */
+
+.agri-animate-fade-in {
+  animation: fadeIn 0.3s ease-out both;
+}
+
+.agri-animate-fade-in-up {
+  animation: fadeInUp 0.35s ease-out both;
+}
+
+.agri-animate-fade-in-scale {
+  animation: fadeInScale 0.3s ease-out both;
+}
+
+.agri-animate-slide-in-left {
+  animation: slideInLeft 0.3s ease-out both;
+}
+
+.agri-animate-slide-in-bottom {
+  animation: slideInBottom 0.3s ease-out both;
+}
+
+/* Staggered children animations */
+.agri-stagger > * {
+  animation: fadeInUp 0.3s ease-out both;
+}
+.agri-stagger > *:nth-child(1) { animation-delay: 0ms; }
+.agri-stagger > *:nth-child(2) { animation-delay: 40ms; }
+.agri-stagger > *:nth-child(3) { animation-delay: 80ms; }
+.agri-stagger > *:nth-child(4) { animation-delay: 120ms; }
+.agri-stagger > *:nth-child(5) { animation-delay: 160ms; }
+.agri-stagger > *:nth-child(6) { animation-delay: 200ms; }
+.agri-stagger > *:nth-child(7) { animation-delay: 240ms; }
+.agri-stagger > *:nth-child(8) { animation-delay: 280ms; }
+
+/* ─── Responsive Layout ─── */
+
+.agri-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.agri-sidebar {
+  display: none;
+  flex-direction: column;
+  width: 260px;
+  background: var(--bg-sidebar);
+  padding: 24px 0;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  animation: slideInLeft 0.3s ease-out both;
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+}
+
+.agri-main {
+  flex: 1;
+  margin-left: 0;
+  padding-bottom: 72px;
+}
+
+.agri-bottomnav {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-card);
+  border-top: 1px solid var(--border-color);
+  padding: 8px 0 max(8px, env(safe-area-inset-bottom));
+  z-index: 100;
+  justify-content: space-around;
+  animation: slideInBottom 0.3s ease-out both;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06);
+}
+
+@media (min-width: 768px) {
+  .agri-sidebar {
+    display: flex;
+  }
+  .agri-main {
+    margin-left: 260px;
+    padding-bottom: 0;
+  }
+  .agri-bottomnav {
+    display: none;
+  }
+}
+
+/* ─── Sidebar nav button hover ─── */
+
+.agri-sidebar nav button {
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.agri-sidebar nav button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), transparent);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.agri-sidebar nav button:hover::before {
+  opacity: 1;
+}
+
+.agri-sidebar nav button:hover {
+  transform: translateX(2px);
+}
+
+/* ─── Card hover effects ─── */
+
+.agri-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.agri-card:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 16px rgba(40, 72, 60, 0.08);
+  transform: translateY(-1px);
+}
+
+.agri-card:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ─── Button animations ─── */
+
+.agri-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.agri-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.agri-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.agri-btn-primary {
+  background-color: #28483C;
+  color: #FFFFFF;
+  border: none;
+}
+
+.agri-btn-primary:hover:not(:disabled) {
+  background-color: #1e3830;
+  box-shadow: 0 4px 16px rgba(40, 72, 60, 0.3);
+}
+
+.agri-btn-secondary {
+  background-color: #FFFFFF;
+  color: #202622;
+  border: 1px solid #D8D8D0;
+}
+
+.agri-btn-secondary:hover:not(:disabled) {
+  border-color: #28483C;
+  background-color: #FAF9F5;
+}
+
+.agri-btn-danger {
+  background-color: #A7443F;
+  color: #FFFFFF;
+  border: none;
+}
+
+.agri-btn-danger:hover:not(:disabled) {
+  background-color: #8f3a36;
+  box-shadow: 0 4px 16px rgba(167, 68, 63, 0.3);
+}
+
+.agri-btn-ghost {
+  background-color: transparent;
+  color: #28483C;
+  border: none;
+}
+
+.agri-btn-ghost:hover:not(:disabled) {
+  background-color: rgba(40, 72, 60, 0.06);
+}
+
+/* ─── Stat card ─── */
+
+.agri-stat-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.agri-stat-card:hover {
+  border-color: #28483C;
+  box-shadow: 0 2px 12px rgba(40, 72, 60, 0.06);
+}
+
+/* ─── Input focus animation ─── */
+
+.agri-input {
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.agri-input:focus {
+  border-color: #28483C;
+  box-shadow: 0 0 0 3px rgba(40, 72, 60, 0.08);
+  outline: none;
+}
+
+/* ─── Page header ─── */
+
+.agri-page-header {
+  animation: fadeInUp 0.3s ease-out both;
+}
+
+/* ─── Badge pulse for important statuses ─── */
+
+.agri-badge-pulse {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* ─── Focus visible ─── */
+:focus-visible {
+  outline: 2px solid #28483C;
+  outline-offset: 2px;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+/* ─── Selection ─── */
+::selection {
+  background-color: #DEE7E0;
+  color: #202622;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── HTML5 QR Scanner overrides ─── */
+#qr-reader {
+  border: none !important;
+}
+#qr-reader video {
+  border-radius: 8px;
+}
+#qr-reader img[alt="Info icon"] {
+  display: none;
+}
+#qr-reader__scan_region {
+  min-height: 250px;
+}
+#qr-reader__dashboard {
+  display: none;
+}
