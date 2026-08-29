@@ -30,7 +30,7 @@ services:
       DB_URL: jdbc:mysql://mysql:3306/agro_trace_dev?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       DB_USERNAME: agro_trace_user
       DB_PASSWORD: agro_trace_pass
-      JWT_SECRET: ${JWT_SECRET:-bXlTZWNyZXRLZXlTZWNyZXRLZXlTZWNyZXRLZXlTZWNyZXRLZXk=}
+      JWT_SECRET: ${JWT_SECRET}
       SPRING_PROFILES_ACTIVE: dev
     ports:
       - "8080:8080"
