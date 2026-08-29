@@ -443,6 +443,6 @@ Common error codes your frontend shoud handle:
 | DUPLICATE_AADHAAR | 409 | Aadhaar alrady registered |
 | LOT_NOT_FOUND | 404 | Lot doesn't exist |
 | QUANTITY_MISMATCH | 400 | Package quntities exceed lot
-## License
 
-Private — AgriSafe Project
+## License
+https://github.com/AshIndian-Coder/AGRISAFE/blob/8ee72d7208c73e7fdfbb88182b534f08200ac1d3/LICENSE
