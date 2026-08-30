@@ -17,7 +17,7 @@ Polygon Amoy Testnet (Smart Contract)
 | Layer | Technology |
 |-------|-----------|
 | Frontend | React 19, TypeScript 6, Vite 8, Tailwind CSS 4, Zustand 5 |
-| Backend | Spring Boot 3, Java 17, MySQL, Flyway, Spring Security + JWT |
+| Backend | Spring Boot 3, Java 21, MySQL, Flyway, Spring Security + JWT |
 | Blockchain | Thirdweb v5 SDK, Polygon Amoy (chain 80002) |
 | Auth | Email OTP + 6-digit PIN (Spring Boot) + Thirdweb InApp Wallet |
 
